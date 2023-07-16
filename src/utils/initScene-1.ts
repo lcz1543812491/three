@@ -3,6 +3,23 @@ import gsap from "gsap";
 import * as dat from "dat.gui";
 import { OrbitControls } from "three/addons/controls/OrbitControls.js";
 
+function createTrangle({ scene }) {
+  for (let i = 0; i < 50; i++) {
+    const geometry = new THREE.BufferGeometry();
+    const vertics = new Float32Array(9);
+    for (let j = 0; j < 9; j++) {
+      vertics[j] = Math.random() * 5;
+    }
+    geometry.setAttribute("position", new THREE.BufferAttribute(vertics, 3));
+
+    const color = new THREE.Color(Math.random(), Math.random(), Math.random());
+
+    const material = new THREE.MeshBasicMaterial({ color, transparent: true, opacity: 0.5 });
+    const cube = new THREE.Mesh(geometry, material);
+    scene.add(cube);
+  }
+}
+
 export function initScene() {
   const scene = new THREE.Scene();
   const camera = new THREE.PerspectiveCamera(
@@ -14,76 +31,77 @@ export function initScene() {
 
   // const geometry = new THREE.BoxGeometry(1, 1, 1);
 
-  const geometry = new THREE.BufferGeometry();
-  const vertics = new Float32Array([
-    -1, -1, 1, 
-    1, -1, 1, 
-    1, 1, 1, 
+  //   const geometry = new THREE.BufferGeometry();
+  //   const vertics = new Float32Array([
+  //     -1, -1, 1,
+  //     1, -1, 1,
+  //     1, 1, 1,
 
-    1,1,1,
-    -1, 1, 1, 
-    -1, -1, 1,
-  ]);
+  //     1,1,1,
+  //     -1, 1, 1,
+  //     -1, -1, 1,
+  //   ]);
 
-  geometry.setAttribute('position', new THREE.BufferAttribute(vertics, 3))
+  //   geometry.setAttribute('position', new THREE.BufferAttribute(vertics, 3))
 
-  const material = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
-  const cube = new THREE.Mesh(geometry, material);
+  //   const material = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
+  //   const cube = new THREE.Mesh(geometry, material);
 
   // cube.position.set(5,0, 0);
   // cube.scale.set(3,2,1);
   // cube.rotation.set(Math.PI / 4, 0, 0);
-  const gui = new dat.GUI();
-  gui
-    .add(cube.position, "x")
-    .min(0)
-    .max(10)
-    .step(0.1)
-    .name("移动x轴")
-    .onChange((value) => {
-      console.log("onChange", value);
-    })
-    .onFinishChange((value) => {
-      console.log("onFinishChange", value);
-    });
+  createTrangle({ scene });
+//   const gui = new dat.GUI();
+  //   gui
+  //     .add(cube.position, "x")
+  //     .min(0)
+  //     .max(10)
+  //     .step(0.1)
+  //     .name("移动x轴")
+  //     .onChange((value) => {
+  //       console.log("onChange", value);
+  //     })
+  //     .onFinishChange((value) => {
+  //       console.log("onFinishChange", value);
+  //     });
 
-  gui
-    .addColor(
-      {
-        color: "#00ff00",
-      },
-      "color"
-    )
-    .onChange((value) => {
-      cube.material.color.set(value);
-    });
+  //   gui
+  //     .addColor(
+  //       {
+  //         color: "#00ff00",
+  //       },
+  //       "color"
+  //     )
+  //     .onChange((value) => {
+  //       cube.material.color.set(value);
+  //     });
 
-  gui
-    .add(
-      {
-        fn: () => {
-          console.log("@@@@");
-          gsap.to(cube.position, {
-            x: 5,
-            duration: 5,
-            ease: "back.out(1.7)",
-            repeat: 3,
-            yoyo: true,
-            onComplete: () => {
-              console.log("onComplete");
-            },
-          });
-        },
-      },
-      "fn"
-    )
-    .name("点击动画");
+  //   gui
+  //     .add(
+  //       {
+  //         fn: () => {
+  //           console.log("@@@@");
+  //           gsap.to(cube.position, {
+  //             x: 5,
+  //             duration: 5,
+  //             ease: "back.out(1.7)",
+  //             repeat: 3,
+  //             yoyo: true,
+  //             onComplete: () => {
+  //               console.log("onComplete");
+  //             },
+  //           });
+  //         },
+  //       },
+  //       "fn"
+  //     )
+  //     .name("点击动画");
 
-  gui.addFolder("设置立方体").add(cube.material, "wireframe");
+  // gui.addFolder("设置立方体").add(cube.material, "wireframe");
 
   const axesHelper = new THREE.AxesHelper(5);
   scene.add(axesHelper);
-  scene.add(cube);
+  // scene.add(cube);
   camera.position.z = 5;
 
   const renderer = new THREE.WebGLRenderer({ antialias: true });
