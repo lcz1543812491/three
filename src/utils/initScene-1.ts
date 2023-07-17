@@ -2,6 +2,8 @@ import * as THREE from "three";
 import gsap from "gsap";
 import * as dat from "dat.gui";
 import { OrbitControls } from "three/addons/controls/OrbitControls.js";
+import textureUrl from "../assets/cai-zhi.jpg";
+import textureUrl1 from '../assets/texture-2.jpg';
 
 function createTrangle({ scene }) {
   for (let i = 0; i < 50; i++) {
@@ -14,7 +16,11 @@ function createTrangle({ scene }) {
 
     const color = new THREE.Color(Math.random(), Math.random(), Math.random());
 
-    const material = new THREE.MeshBasicMaterial({ color, transparent: true, opacity: 0.5 });
+    const material = new THREE.MeshBasicMaterial({
+      color,
+      transparent: true,
+      opacity: 0.5,
+    });
     const cube = new THREE.Mesh(geometry, material);
     scene.add(cube);
   }
@@ -28,6 +34,37 @@ export function initScene() {
     1,
     1000
   );
+
+  const textLoader = new THREE.TextureLoader();
+  const texture = textLoader.load(textureUrl);
+
+  const texture1 = textLoader.load(textureUrl1);
+  // texture.offset.x = 0.5
+
+  const cubGeometry = new THREE.BoxGeometry();
+
+  // const vertics = new Float32Array([
+  //   -1, -1, 1, 1, -1, 1, 1, 1, 1,
+
+  //   1, 1, 1, -1, 1, 1, -1, -1, 1,
+  // ]);
+
+  // cubGeometry.setAttribute('position', new THREE.BufferAttribute(vertics, 3))
+
+  const cubeMaterial = new THREE.MeshBasicMaterial({
+    color: "#03556e",
+    map: texture,
+    alphaMap: texture1,
+    transparent: true,
+    aoMap: texture1,
+  });
+
+  const cube = new THREE.Mesh(cubGeometry, cubeMaterial);
+
+
+  const plane = new THREE.Mesh()
+
+  scene.add(cube);
 
   // const geometry = new THREE.BoxGeometry(1, 1, 1);
 
@@ -50,8 +87,8 @@ export function initScene() {
   // cube.position.set(5,0, 0);
   // cube.scale.set(3,2,1);
   // cube.rotation.set(Math.PI / 4, 0, 0);
-  createTrangle({ scene });
-//   const gui = new dat.GUI();
+  // createTrangle({ scene });
+  //   const gui = new dat.GUI();
   //   gui
   //     .add(cube.position, "x")
   //     .min(0)
