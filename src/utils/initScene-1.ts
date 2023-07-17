@@ -3,7 +3,7 @@ import gsap from "gsap";
 import * as dat from "dat.gui";
 import { OrbitControls } from "three/addons/controls/OrbitControls.js";
 import textureUrl from "../assets/cai-zhi.jpg";
-import textureUrl1 from '../assets/texture-2.jpg';
+import textureUrl1 from "../assets/texture-2.jpg";
 
 function createTrangle({ scene }) {
   for (let i = 0; i < 50; i++) {
@@ -57,12 +57,29 @@ export function initScene() {
     alphaMap: texture1,
     transparent: true,
     aoMap: texture1,
+    aoMapIntensity: 2
+    // side: THREE.DoubleSide
   });
 
   const cube = new THREE.Mesh(cubGeometry, cubeMaterial);
 
+  // console.log('@@@', THREE.BufferGeometry);
 
-  const plane = new THREE.Mesh()
+  const geometry = new THREE.PlaneGeometry(1, 1);
+  const plane = new THREE.Mesh(geometry, cubeMaterial);
+  scene.add(plane);
+  plane.position.set(1, 0, 0);
+  geometry.setAttribute("uv2", new THREE.BufferAttribute(geometry.attributes.uv.array, 2))
+
+  // const planeGeometry = new THREE.BufferGeometry();
+  // const plane = new THREE.Mesh(planeGeometry, cubeMaterial);
+  // plane.position.set(3, 0, 0);
+  // scene.add(plane);
+
+  // planeGeometry.setAttribute(
+  //   "uv2",
+  //   new THREE.BufferAttribute(planeGeometry.attributes.uv.array, 2)
+  // );
 
   scene.add(cube);
 
