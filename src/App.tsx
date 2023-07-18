@@ -3,7 +3,7 @@ import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
 // import { initScene } from './utils/initScene';
-import { initScene } from './utils/initScene-1';
+import { initScene } from './utils/initScene-2';
 
 
 
