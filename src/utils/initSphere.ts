@@ -5,7 +5,7 @@ import { OrbitControls } from "three/addons/controls/OrbitControls.js";
 import { RGBELoader } from "three/addons/loaders/RGBELoader.js"
 import textureUrl from "../assets/WechatIMG10.jpg";
 import textureUrl1 from "../assets/WechatIMG2_1.jpg";
-import rgbeUrl from '../assets/little_paris_eiffel_tower_2k.hdr';
+import rgbeUrl from '../assets/brown_photostudio_01_1k.hdr';
 
 // console.log('textureUrl', textureUrl, typeof textureUrl);
 
