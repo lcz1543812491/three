@@ -37,6 +37,8 @@ export function initScene() {
 
   const texture1 = textLoader.load(textureUrl1);
 
+  const gui = new dat.GUI();
+
   // const cubGeometry = new THREE.BoxGeometry(1, 1, 1, 100, 100, 100);
 
 
@@ -53,6 +55,14 @@ export function initScene() {
     envMap: texture,
   });
 
+
+  const smallBallGeometry = new THREE.SphereGeometry(0.2, 100, 100);
+  const smallBallmaterial1 = new THREE.MeshBasicMaterial({color: 0xff0000});
+
+  const smallBall = new THREE.Mesh(smallBallGeometry, smallBallmaterial1);
+  smallBall.position.set(2,2,2);
+
+
   const sphere = new THREE.Mesh(geometry1, material1);
   sphere.castShadow = true;
 
@@ -64,11 +74,34 @@ export function initScene() {
 
   scene.add(plane);
   scene.add(sphere);
+  scene.add(smallBall);
 
 
   const light = new THREE.AmbientLight(0x404040, 0.7); // soft white light
 
   const directionalLight = new THREE.DirectionalLight(0xffffff, 2);
+  const spotLight = new THREE.SpotLight(0xffff, 0.5);
+  spotLight.position.set(5,5,5);
+  spotLight.castShadow = true;
+  spotLight.shadow.mapSize.set(4096, 4096);
+  spotLight.shadow.radius = 20;
+  spotLight.target = sphere;
+  spotLight.angle = Math.PI / 6;
+  spotLight.distance = 0;
+  spotLight.penumbra = 0.7;
+  spotLight.decay = 0.2;
+
+
+
+  const pointLight = new THREE.PointLight(0xff0000, 5);
+  pointLight.position.set(2,2,2);
+  pointLight.castShadow = true;
+
+  smallBall.add(pointLight);
+
+  gui.add(pointLight.position, 'x').min(-5).max(5).step(0.1);
+
+
 
   directionalLight.position.set(10, 10, 10);
   directionalLight.castShadow = true;
@@ -83,8 +116,10 @@ export function initScene() {
   directionalLight.shadow.camera.left = -5
   directionalLight.shadow.camera.right = 5;
 
-  scene.add(directionalLight);
+  // scene.add(directionalLight);
   scene.add(light);
+  scene.add(spotLight);
+  scene.add(pointLight);
 
 
   
@@ -97,6 +132,7 @@ export function initScene() {
   const renderer = new THREE.WebGLRenderer({ antialias: true });
   renderer.setSize(window.innerWidth, window.innerHeight);
   renderer.shadowMap.enabled = true;
+  renderer.physicallyCorrectLights = true;
 
   renderer.render(scene, camera);
   const root = document.getElementById("root");
@@ -125,7 +161,14 @@ export function initScene() {
     renderer.setPixelRatio(window.devicePixelRatio);
   });
 
+  const clock = new THREE.Clock();
+
   function render() {
+    const time = clock.getElapsedTime();
+    // console.log('@@@', Math.sin(time));
+    smallBall.position.x = Math.sin(time) * 3;
+    smallBall.position.z = Math.cos(time) * 3;
+
     controls.update();
     renderer.render(scene, camera);
     requestAnimationFrame(render);
