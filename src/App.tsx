@@ -3,7 +3,8 @@ import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
 // import { initScene } from './utils/initScene';
-import { initScene } from './utils/initSphere';
+// import { initScene } from './utils/initSphere';
+import { initIsland } from './utils/initIsland';
 
 
 
@@ -13,7 +14,8 @@ function App() {
 
   useEffect(() => {
     if(!threeScene.current){
-      initScene();
+      // initScene();
+      initIsland();
       threeScene.current = true;
     }
   }, []);
