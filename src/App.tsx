@@ -5,7 +5,8 @@ import './App.css'
 // import { initScene } from './utils/initScene';
 // import { initScene } from './utils/initSphere';
 // import { initIsland } from './utils/initIsland';
-import { initMarble } from './utils/initMarble';
+// import { initMarble } from './utils/initMarble';
+import { initCar } from './utils/initCar';
 
 
 
@@ -17,7 +18,8 @@ function App() {
     if(!threeScene.current){
       // initScene();
       // initIsland();
-      initMarble();
+      // initMarble();
+      initCar();
       threeScene.current = true;
     }
   }, []);
