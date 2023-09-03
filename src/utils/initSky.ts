@@ -3,6 +3,7 @@ import { OrbitControls } from "three/addons/controls/OrbitControls.js";
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 import { DRACOLoader } from 'three/addons/loaders/DRACOLoader.js';
 import flyGltf from '../assets/fly/scene.gltf';
+import rgbeUrl from "../assets/WechatIMG10.jpg";
 
 
 export function initSky() {
@@ -40,9 +41,27 @@ export function initSky() {
   controls.enableDamping = true;
 
 
-  const light = new THREE.AmbientLight(0x404040, 10);
-  const directionalLight = new THREE.DirectionalLight(0xffffff, 1);
-  directionalLight.position.set(-20, 20, 20);
+  const light = new THREE.AmbientLight(0x404040, 100);
+  light.position.set(20, 20, 20)
+  const directionalLight = new THREE.DirectionalLight(0xffffff, 10);
+  directionalLight.position.set(-20, 40, 20);
+
+
+  for(let i = 0; i <= 10; i++) {
+
+    // const x = Math.random()*1000 - 500
+    // const y = Math.random()*1000 - 500
+    // const z = Math.random()*1000 - 500
+   
+    const sphereGe = new THREE.SphereGeometry(1, 100, 100);
+    console.log()
+    // const skyMat = new THREE.MeshBasicMaterial({
+    //   map: new THREE.TextureLoader().load(rgbeUrl),
+    // });
+    sphereGe.scale(1, 1, -1);
+    const sky = new THREE.Mesh(sphereGe);
+    scene.add(sky)
+  }
 
   scene.add(camera)
   scene.add(light)
@@ -69,6 +88,9 @@ export function initSky() {
   gltfLoader.load(flyGltf, (fly) => {
     console.log('fly', fly);
     const flyScene = fly.scene;
+    fly.scene.scale.x = 0.6;
+    fly.scene.scale.y = 0.6;
+    fly.scene.scale.z = 0.6;
     // carScene.traverse((child) => {
     //     if(child.isMesh){
     //       console.log(child.name);

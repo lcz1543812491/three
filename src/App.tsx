@@ -7,7 +7,9 @@ import './App.css'
 // import { initIsland } from './utils/initIsland';
 // import { initMarble } from './utils/initMarble';
 // import { initCar } from './utils/initCar';
-import { initSky } from './utils/initSky'
+// import { initSky } from './utils/initSky'
+
+import { part1 } from './threeDemo/part-1';
 
 
 
@@ -21,7 +23,8 @@ function App() {
       // initIsland();
       // initMarble();
       // initCar();
-      initSky()
+      // initSky()
+      part1()
       threeScene.current = true;
     }
   }, []);
