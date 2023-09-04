@@ -1,6 +1,7 @@
 import * as THREE from 'three'
 import gsap from 'gsap'
 import { OrbitControls } from "three/addons/controls/OrbitControls.js";
+import * as dat from "dat.gui";
 
 export function part1() {
   const scene = new THREE.Scene()
@@ -62,6 +63,20 @@ export function part1() {
 
   const controls = new OrbitControls(camera, render.domElement)
   controls.enableDamping = true;
+
+  const colors = {color: 0xff000, spin: () => {
+    gsap.to(mesh.rotation, {duration: 1, y: mesh.rotation.y + 10} )
+  }}
+
+  const gui = new dat.GUI();
+
+  gui.addColor(colors, 'color').onChange((value) => {
+    material1.color.set(colors.color)
+  })
+
+  gui.add(colors, 'spin')
+
+
 
   window.addEventListener("resize", () => {
     camera.aspect = window.innerWidth / window.innerHeight;
