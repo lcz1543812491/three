@@ -9,7 +9,8 @@ import './App.css'
 // import { initCar } from './utils/initCar';
 // import { initSky } from './utils/initSky'
 
-import { part1 } from './threeDemo/part-2';
+// import { part1 } from './threeDemo/part-2';
+import { part1 } from './threeDemo/part-3';
 
 
 

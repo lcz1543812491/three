@@ -33,7 +33,24 @@ export function part1() {
   const material1 = new THREE.MeshBasicMaterial( { color: 0xfff000 } );
   const mesh = new THREE.Mesh( geometry, material1 );
 
-  scene.add(mesh)
+  const material2 = new THREE.MeshBasicMaterial({color: 0xff0000})
+
+  const sphere = new THREE.Mesh(new THREE.SphereGeometry(1, 32, 32), material2)
+
+  sphere.position.x = -1.5
+
+  const plane = new THREE.Mesh(new THREE.PlaneGeometry(1, 1, 30, 30), material2)
+
+  const torus = new THREE.Mesh(new THREE.TorusGeometry(0.3, 0.2, 16, 32), material2)
+
+  torus.position.x = 1.5
+
+  scene.add(sphere)
+  
+  scene.add(plane)
+
+  scene.add(torus)
+  // scene.add(mesh)
 
 
   // cube.position.set(1, -0.5, 1)
